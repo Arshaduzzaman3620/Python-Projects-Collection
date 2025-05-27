@@ -7,7 +7,7 @@ qr = qrcode.QRCode(
     box_size=10,
     border=4,
 )
-qr.add_data("https://www.pexels.com/ja-jp/photo/26741437/")
+qr.add_data("add the link here ")
 qr.make(fit=True)
 
 img = qr.make_image(fill="black", back_color="white")
