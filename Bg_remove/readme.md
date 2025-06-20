@@ -19,9 +19,4 @@ Perfect for:
 
 ---
 
-## 📦 Requirements
-
-Make sure Python 3 is installed. Then install the required libraries:
-
-```bash
 pip install rembg pillow
