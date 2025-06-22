@@ -82,6 +82,5 @@ else:
 └── readme.md           # Project documentation
 ```
 
-## License
 
 
