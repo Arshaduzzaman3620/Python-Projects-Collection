@@ -4,7 +4,7 @@ import string
 def generate_secure_password(length=12, include_uppercase=True, include_special=True, include_digits=True):
     """
     Generates a cryptographically secure password.
-    
+
     Parameters:
         length (int): Length of the password (minimum 8 for security).
         include_uppercase (bool): Whether to include uppercase letters.
@@ -65,7 +65,4 @@ if __name__ == "__main__":
         print("\n❌ Error:", e)
     except Exception as e:
         print("\n⚠️ Unexpected Error:", e)
-        
-        
-        
- #Convert this into a Django/Flask API or Vue.js frontend for better usability.
+

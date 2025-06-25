@@ -1,69 +1,82 @@
 from tkinter import *
-from tkinter import ttk
 from tkinter import messagebox
+from random import choice, randint, shuffle
+import pyperclip
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def generate_password():
+    letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    numbers = "0123456789"
+    symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?/~`"
 
-# ---------------------------- SAVE PASSWORD ----------------------- #
-def save ():
-  website = website_entry.get()
-  email = email_entry.get()
-  password = password_entry.get()
+    password_list = [choice(letters) for _ in range(randint(8, 10))]
+    password_list += [choice(symbols) for _ in range(randint(2, 4))]
+    password_list += [choice(numbers) for _ in range(randint(2, 4))]
 
+    shuffle(password_list)
+    password = "".join(password_list)
 
-  if len(website) == 0 or len(email) == 0 or len(password) == 0:
-      messagebox.showerror(title="Error", message="Please fill out all fields.")
-      return
+    password_entry.delete(0, END)
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
+    messagebox.showinfo(title="Password Generated", message="Password copied to clipboard!")
 
-  is_okay = messagebox.askokcancel(title=website, message=f"These are the details entered:\nEmail: {email}\nPassword: {password}\nIs it ok to save?")
+# ---------------------------- SAVE PASSWORD ------------------------------- #
+def save():
+    website = website_entry.get().strip()
+    email = email_entry.get().strip()
+    password = password_entry.get().strip()
 
-  if is_okay:
-      with open("data.txt", "a") as data_file:
-          data_file.write(f"{website} | {email} | {password}\n")
-      website_entry.delete(0, END)  # Clear the website entry field
-      password_entry.delete(0, END)  # Clear the password entry field
-      website_entry.focus()  # Set focus back to the website entry field
-  else:
-      messagebox.showinfo(title="Cancelled", message="Your data was not saved.")
+    if not website or not email or not password:
+        messagebox.showerror(title="Error ❌", message="Please fill out all fields.")
+        return
 
+    is_okay = messagebox.askokcancel(
+        title=website,
+        message=f"These are the details entered:\n\n📧 Email: {email}\n🔑 Password: {password}\n\nSave?"
+    )
 
-
-
+    if is_okay:
+        with open("data.txt", "a") as data_file:
+            data_file.write(f"{website} | {email} | {password}\n")
+        website_entry.delete(0, END)
+        password_entry.delete(0, END)
+        website_entry.focus()
+        messagebox.showinfo(title="Saved ✅", message="Your credentials have been saved!")
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
+window.title("🔐 Password Manager")
+window.config(padx=40, pady=40, bg="#f7f7f7")
 
-window.title("Password Manager ")
-window.config(padx=50, pady=50)
-
-canvas = Canvas(height=200,width=200)
+# Logo
+canvas = Canvas(height=200, width=200, bg="#f7f7f7", highlightthickness=0)
 logo_img = PhotoImage(file="logo.png")
-canvas.create_image(100,100, image=logo_img)
+canvas.create_image(100, 100, image=logo_img)
 canvas.grid(row=0, column=1)
 
 # Labels
-website_label = Label(text="Website:")
-website_label.grid(row=1, column=0)
-email_label = Label(text="Email/Username:")
-email_label.grid(row=2, column=0)
-password_label = Label(text="Password:")
-password_label.grid(row=3, column=0)
+Label(text="Website:", font=("Segoe UI", 10), bg="#f7f7f7").grid(row=1, column=0, sticky="e")
+Label(text="Email/Username:", font=("Segoe UI", 10), bg="#f7f7f7").grid(row=2, column=0, sticky="e")
+Label(text="Password:", font=("Segoe UI", 10), bg="#f7f7f7").grid(row=3, column=0, sticky="e")
 
-# Entry
-website_entry = Entry(width=35)
-website_entry.grid(row=1, column=1, columnspan=2)
-website_entry.focus()  # Set focus on the website entry field
-email_entry = Entry(width=35)
-email_entry.grid(row=2, column=1, columnspan=2)
-email_entry.insert(0, "example@email.com")  # Pre-fill with example email
+# Entries
+website_entry = Entry(width=34)
+website_entry.grid(row=1, column=1, columnspan=2, pady=5)
+website_entry.focus()
+
+email_entry = Entry(width=34)
+email_entry.grid(row=2, column=1, columnspan=2, pady=5)
+email_entry.insert(0, "example@email.com")
+
 password_entry = Entry(width=21)
-password_entry.grid(row=3, column=1, columnspan=2)
-
+password_entry.grid(row=3, column=1, pady=5)
 
 # Buttons
-generate_password_button = Button(text="Generate Password")
-generate_password_button.grid(row=3, column=2)
-add_button = Button(text="Add", width=36, command= save)
-add_button.grid(row=4, column=1, columnspan=2)
+generate_password_button = Button(text="Generate Password", width=14, bg="#4CAF50", fg="white", command=generate_password)
+generate_password_button.grid(row=3, column=2, padx=5)
+
+add_button = Button(text="Add", width=36, bg="#2196F3", fg="white", command=save)
+add_button.grid(row=4, column=1, columnspan=2, pady=15)
 
 window.mainloop()
