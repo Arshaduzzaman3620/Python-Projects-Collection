@@ -18,5 +18,8 @@ Perfect for:
 - 💾 Output in HD `.jpg` format
 
 ---
+python -m pip install --upgrade pip
 
 pip install rembg pillow
+
+python -m pip install pillow-heif rembg Pillow
