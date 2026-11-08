@@ -1,25 +1,31 @@
-# 🖼️ Background Remover — Natural White Background with Soft Shadow
+# Background Remover — Natural White Background with Soft Shadow
 
-This Python script removes the background from any image and replaces it with a **natural-looking white background** and **soft shadow**, making it look realistic and professional.
+A Python script that removes the background from a photo and replaces it with a natural-looking white background and a soft shadow, for a realistic, professional result.
 
-Perfect for:
+Useful for:
 - Profile photos
 - Passport/ID pictures
 - Product shots for e-commerce
 
----
+## Features
 
-## ✅ Features
+- File picker to choose any image (`.jpg`, `.jpeg`, `.png`, `.heic`)
+- AI-powered background removal using `rembg`
+- Clean white background with soft edges
+- Optional soft shadow for a natural, 3D feel
+- Output in HD `.jpg` format
 
-- 📂 File picker to choose any image (`.jpg`, `.jpeg`, `.png`)
-- 🤖 AI-powered background removal using `rembg`
-- ⚪ Clean white background with soft edges
-- 🌫️ Optional soft shadow for a natural 3D feel
-- 💾 Output in HD `.jpg` format
+## Install
 
----
+```bash
 python -m pip install --upgrade pip
+pip install rembg pillow pillow-heif
+```
 
-pip install rembg pillow
+## Usage
 
-python -m pip install pillow-heif rembg Pillow
+```bash
+python bg_remover_white_bacground.py
+```
+
+A file picker opens — select an image. The processed result is saved next to the script as `<original-filename>_natural_white_bg.jpg`.
