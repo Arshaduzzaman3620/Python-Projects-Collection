@@ -1,5 +1,8 @@
+import sys
+
 import qrcode
-from PIL import Image
+
+data = sys.argv[1] if len(sys.argv) > 1 else input("Enter text or a URL to encode: ")
 
 qr = qrcode.QRCode(
     version=1,
@@ -7,8 +10,10 @@ qr = qrcode.QRCode(
     box_size=10,
     border=4,
 )
-qr.add_data("add the link here ")
+qr.add_data(data)
 qr.make(fit=True)
 
-img = qr.make_image(fill="black", back_color="white")
+img = qr.make_image(fill_color="black", back_color="white")
 img.save("qr.png")
+
+print("Saved as qr.png")
